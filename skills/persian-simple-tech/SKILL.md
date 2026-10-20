@@ -1,7 +1,7 @@
 ---
 name: persian-simple-tech
-description: "ASD-STE100 Simplified Technical Persian: concise, one-fact-per-sentence, zero ambiguous terms."
-version: 1.0.0
+description: "Use when writing technical Persian text with ASD-STE100."
+version: 1.1.0
 metadata:
   hermes:
     tags: [writing, technical-writing, ste, asd-ste100, persian, editing]

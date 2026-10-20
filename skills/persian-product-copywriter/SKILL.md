@@ -1,7 +1,7 @@
 ---
 name: persian-product-copywriter
-description: "Master pipeline: extract specs -> write factual SEO copy -> humanize -> sanitize -> audit with hermes-seo."
-version: 2.1.0
+description: "Use when writing Persian product descriptions or SEO copy."
+version: 2.2.0
 metadata:
   hermes:
     tags: [writing, ecommerce, copywriter, woocommerce, seo, humanize, persian, hermes-seo]

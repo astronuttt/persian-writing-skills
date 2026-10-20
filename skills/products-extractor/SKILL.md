@@ -1,7 +1,7 @@
 ---
 name: products-extractor
-description: "Extract official product specs, SKU, model, box contents, and images from manufacturer sites or web."
-version: 1.0.0
+description: "Use when extracting official product specs, SKU, or images."
+version: 1.1.0
 metadata:
   hermes:
     tags: [ecommerce, scraper, product-data, specifications, official-brand, woocommerce]

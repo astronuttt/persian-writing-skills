@@ -1,7 +1,7 @@
 ---
 name: persian-humanizer
-description: "Humanize Persian text: remove AI clichés, puffery, and robotic structures into natural, factual Persian."
-version: 1.0.0
+description: "Use when humanizing Persian text or removing AI clichés."
+version: 1.1.0
 metadata:
   hermes:
     tags: [writing, editing, humanize, anti-ai-slop, persian, ecommerce]
