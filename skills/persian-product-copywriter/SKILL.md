@@ -1,12 +1,12 @@
 ---
 name: persian-product-copywriter
-description: "Master pipeline: extract specs -> write factual SEO copy -> humanize -> sanitize for WooCommerce."
-version: 2.0.0
+description: "Master pipeline: extract specs -> write factual SEO copy -> humanize -> sanitize -> audit with hermes-seo."
+version: 2.1.0
 metadata:
   hermes:
-    tags: [writing, ecommerce, copywriter, woocommerce, seo, humanize, persian]
+    tags: [writing, ecommerce, copywriter, woocommerce, seo, humanize, persian, hermes-seo]
     category: ecommerce
-    related_skills: [products-extractor, persian-humanizer, hermes-seo:seo-page, persian-text-quality]
+    related_skills: [products-extractor, persian-humanizer, hermes-seo:seo-page, hermes-seo:seo-ecommerce, persian-text-quality]
 ---
 
 # Master Persian Product Copywriter Pipeline
@@ -15,25 +15,29 @@ metadata:
 1. **`products-extractor`**: استخراج داده‌های رسمی و بدون حدس و گمان از سایت برند سازنده.
 2. **`persian-product-copywriter`**: ساختاردهی به متن در قالب HTML سئو و متای استاندارد رنک‌مث.
 3. **`persian-humanizer`**: حذف کلیشه‌های هوش مصنوعی، تنظیم جملات تک‌گزاره‌ای (زیر ۲۵ کلمه) و طبیعی‌سازی لحن.
+4. **`hermes-seo`**: ممیزی ساختار صفحه و تطابق با استانداردهای E-Commerce On-Page SEO.
 
 ---
 
-## گردش کار ۴ مرحله‌ای (The 4-Stage Workflow)
+## گردش کار ۵ مرحله‌ای (The 5-Stage Workflow)
 
 ```
 [ورودی: نام/مدل/SKU]
         │
         ▼ (مرحله ۱: استخراج فکت)
-1. products-extractor ──► جدول مشخصات فنی رسمی + اقلام جعبه (سایت سازنده)
+1. products-extractor     ──► جدول مشخصات فنی رسمی + اقلام جعبه (سایت سازنده)
         │
         ▼ (مرحله ۲: نگارش سئو و ساختار)
-2. master copywriter  ──► قالب HTML سئو + پاراگراف معرفی + H2ها + FAQ + خط META
+2. master copywriter      ──► قالب HTML سئو + پاراگراف معرفی + H2ها + FAQ + خط META
         │
         ▼ (مرحله ۳: انسانی‌سازی)
-3. persian-humanizer  ──► حذف صفت‌های زرد (Puffery)، شکستن جملات بلند، رفع بوی AI
+3. persian-humanizer      ──► حذف صفت‌های زرد (Puffery)، شکستن جملات بلند، رفع بوی AI
         │
-        ▼ (مرحله ۴: تمیزکاری فنی)
-4. sanitize_fa.py     ──► اصلاح نیم‌فاصله‌ها (ZWNJ) و اعتبارسنجی طول متای ۱۵۰-۱۶۰ کاراکتری
+        ▼ (مرحله ۴: تمیزکاری فنی و سانیتایزر)
+4. sanitize_fa.py         ──► اصلاح نیم‌فاصله‌ها (ZWNJ) و اعتبارسنجی طول متای ۱۵۰-۱۶۰ کاراکتری
+        │
+        ▼ (مرحله ۵: کنترل کیفیت و ممیزی با hermes-seo)
+5. hermes-seo validation  ──► اعتبارسنجی با hermes-seo:seo-ecommerce و hermes-seo:seo-page
         │
         ▼
 [نمایش متن در قالب کدبلاگ برای تایید نهایی با 👍 / 👎]
@@ -96,15 +100,25 @@ metadata:
 
 ---
 
-## اعتبارسنجی فنی خروجی (Post-Processing)
+## اعتبارسنجی فنی خروجی و ادغام با hermes-seo
 
 پس از دریافت متن از مدل:
-1. اجرای سانیتایزر نیم‌فاصله:
+1. **اجرای سانیتایزر نیم‌فاصله:**
    ```bash
-   python3 /root/woocommerce-mcp/sanitize_fa.py < draft.txt > sanitized.txt
+   python3 /root/persian-writing-skills/tools/sanitizer/sanitize_fa.py < draft.txt > sanitized.txt
    ```
-2. شمارش طول خط `META:` (هدف دقیقاً ۱۵۰ تا ۱۶۰ کاراکتر فارسی).
+2. **شمارش طول خط `META:` (هدف دقیقاً ۱۵۰ تا ۱۶۰ کاراکتر فارسی):**
    - **نکته کلیدی طول متا:** مدل‌ها معمولاً متا دیسکریپشن اولیه را کوتاه (۱۳۰ تا ۱۴۰ کاراکتر) تولید می‌کنند. برای رسیدن دقیق به ۱۵۰-۱۶۰ کاراکتر، یک ویژگی فنی ثانویه (مانند «شارژ سریع 20W PD و سه خروجی هم‌زمان») یا کلمه «فروشگاه هوش استور» را اضافه کنید و طول رشته را با اسکریپت بشمارید (کف عملی قابل‌قبول ۱۴۶ کاراکتر، سقف ۱۶۲ کاراکتر).
-3. اطمینان از تطابق دقیق `<h1>` با عنوان محصول (بایت‌به‌بایت).
-4. ارائه متن به سینا در قالب کدبلاگ (Verbatim) بدون خلاصه کردن، همراه با دکمه‌های تایید:
+3. **اطمینان از تطابق دقیق `<h1>` با عنوان محصول (بایت‌به‌بایت).**
+4. **ممیزی سئو بر اساس قوانین `hermes-seo`:**
+   - فراخوانی قوانین مهارت `hermes-seo:seo-ecommerce` و `hermes-seo:seo-page`:
+     - چک‌لیست H1 یکتا و عدم تکرار در واریانت‌ها.
+     - اطمینان از حضور لینک داخلی به دسته‌بندی والد کالا (`Internal Link`).
+     - بررسی تگ‌های Alt تصاویر بر اساس فرمت استاندارد.
+   - پس از انتشار محصول در وردپرس، ممیزی زنده صفحه با ابزار CLI انجام می‌شود:
+     ```bash
+     hermes seo run fetch_page.py "https://hoshstore.ir/product/<slug>/" --render auto --json
+     ```
+     و نتیجه را با چک‌لیست مهارت `hermes-seo:seo-ecommerce` مقایسه کنید تا نمره سبز کامل تثبیت شود.
+5. **ارائه متن به سینا در قالب کدبلاگ (Verbatim) بدون خلاصه کردن، همراه با دکمه‌های تایید:**
    `👍 / 👎`
